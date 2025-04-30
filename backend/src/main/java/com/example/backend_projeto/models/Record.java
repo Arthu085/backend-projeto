@@ -6,26 +6,24 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Entity
-@Table(name = "habits", schema = "public")
-public class Habit {
+@Table(name = "records", schema = "public")
+public class Record {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "id_user")
-    private User user;
+    @JoinColumn(name = "id_habit")
+    private Habit habit;
 
-    @ManyToOne
-    @JoinColumn(name = "id_type")
-    private TypeHabit typeHabit;
-
-    @Column(length = 50)
-    private String name;
+    @Column(name = "date_performed")
+    private LocalDateTime datePerformed;
 }

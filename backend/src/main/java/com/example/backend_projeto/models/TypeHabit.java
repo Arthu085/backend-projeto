@@ -11,8 +11,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 @Entity
-@Table(name = "users", schema = "public")
-public class User {
+@Table(name = "type_habits", schema = "public")
+public class TypeHabit {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,13 +20,4 @@ public class User {
 
     @Column(length = 50)
     private String name;
-
-    @Column(length = 100, unique = true)
-    private String email;
-
-    @Column(length = 70)
-    private String password;
-
-    @Column(length = 70)
-    private String city;
 }

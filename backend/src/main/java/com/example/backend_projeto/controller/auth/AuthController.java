@@ -1,4 +1,4 @@
-package com.example.backend_projeto.controller;
+package com.example.backend_projeto.controller.auth;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.backend_projeto.models.User;
-import com.example.backend_projeto.service.AuthService;
-import com.example.backend_projeto.dto.AuthResponse;
-import com.example.backend_projeto.dto.LoginRequest;
+import com.example.backend_projeto.service.auth.AuthService;
+import com.example.backend_projeto.dto.auth.AuthResponse;
+import com.example.backend_projeto.dto.auth.LoginRequest;
 
 @RestController
 @RequestMapping("/auth")

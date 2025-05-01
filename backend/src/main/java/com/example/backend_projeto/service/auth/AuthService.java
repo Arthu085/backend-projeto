@@ -1,7 +1,7 @@
-package com.example.backend_projeto.service;
+package com.example.backend_projeto.service.auth;
 
 import com.example.backend_projeto.models.User;
-import com.example.backend_projeto.repository.UserRepository;
+import com.example.backend_projeto.repository.user.UserRepository;
 import com.example.backend_projeto.util.JwtUtil;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

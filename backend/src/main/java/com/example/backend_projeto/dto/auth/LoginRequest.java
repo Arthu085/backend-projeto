@@ -1,4 +1,4 @@
-package com.example.backend_projeto.dto;
+package com.example.backend_projeto.dto.auth;
 
 public class LoginRequest {
 

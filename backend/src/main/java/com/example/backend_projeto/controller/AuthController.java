@@ -1,5 +1,6 @@
 package com.example.backend_projeto.controller;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,7 +31,9 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public User register(@RequestBody User user) {
-        return authService.registerUser(user);
+    public ResponseEntity<User> register(@RequestBody User user) {
+        User created = authService.registerUser(user);
+        return ResponseEntity.status(HttpStatus.CREATED).body(created); // 201 Created
     }
+
 }

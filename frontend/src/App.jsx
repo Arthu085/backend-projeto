@@ -1,10 +1,10 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 // Pages
-import Login from "./pages/Login";
-import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import NewRecommendation from "./pages/NewRecommendation";
+import Login from "./pages/Auth/Login/page";
+import Register from "./pages/Auth/Register/Utils/page";
 import History from "./pages/History";
 
 function App() {

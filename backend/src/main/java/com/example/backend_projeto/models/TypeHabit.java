@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 @Entity
-@Table(name = "type_habits", schema = "public")
+@Table(name = "types_habits", schema = "public")
 public class TypeHabit {
 
     @Id

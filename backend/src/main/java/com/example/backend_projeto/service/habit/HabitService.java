@@ -1,5 +1,7 @@
 package com.example.backend_projeto.service.habit;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,5 +24,14 @@ public class HabitService {
         Habit habit = Habit.builder().user(user)
                 .typeHabit(typeHabitRepository.getReferenceById(dto.id_type())).name(dto.name()).build();
         habitRepository.save(habit);
+    }
+
+    public void delete(Long id) {
+        Optional<Habit> habit = habitRepository.findById(id);
+        if (habit.isPresent()) {
+            habitRepository.deleteById(id);
+        } else {
+            throw new RuntimeException("Hábito não encontrado com o ID:" + id);
+        }
     }
 }

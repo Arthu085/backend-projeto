@@ -28,4 +28,13 @@ public class Habit {
 
     @Column(length = 50)
     private String name;
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setTypeHabit(TypeHabit typeHabit) {
+        this.typeHabit = typeHabit;
+    }
+
 }

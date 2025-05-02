@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 import com.example.backend_projeto.dto.habit.CreateHabitDTO;
+import com.example.backend_projeto.dto.habit.EditHabitDTO;
 import com.example.backend_projeto.models.User;
 import com.example.backend_projeto.service.habit.HabitService;
 
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
 @RequestMapping("/habit")
@@ -32,6 +34,12 @@ public class HabitController {
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         habitService.delete(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("edit/{id}")
+    public ResponseEntity<Void> edit(@PathVariable Long id, @RequestBody EditHabitDTO dto) {
+        habitService.edit(id, dto);
+        return ResponseEntity.ok().build();
     }
 
 }

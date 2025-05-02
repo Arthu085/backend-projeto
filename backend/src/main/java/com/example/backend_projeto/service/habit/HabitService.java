@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.backend_projeto.dto.habit.CreateHabitDTO;
+import com.example.backend_projeto.dto.habit.EditHabitDTO;
 import com.example.backend_projeto.models.Habit;
 import com.example.backend_projeto.models.User;
 import com.example.backend_projeto.repository.habit.HabitRepository;
@@ -33,5 +34,20 @@ public class HabitService {
         } else {
             throw new RuntimeException("Hábito não encontrado com o ID:" + id);
         }
+    }
+
+    public void edit(Long id, EditHabitDTO dto) {
+        Habit habit = habitRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Hábito não encontrado com o ID:" + id));
+
+        if (dto.getName() != null) {
+            habit.setName(dto.getName());
+        }
+
+        if (dto.getId_type() != null) {
+            habit.setTypeHabit(typeHabitRepository.getReferenceById(dto.getId_type()));
+        }
+
+        habitRepository.save(habit);
     }
 }

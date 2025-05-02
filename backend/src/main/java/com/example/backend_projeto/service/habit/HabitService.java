@@ -1,12 +1,15 @@
 package com.example.backend_projeto.service.habit;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.backend_projeto.dto.habit.CreateHabitDTO;
 import com.example.backend_projeto.dto.habit.EditHabitDTO;
+import com.example.backend_projeto.dto.habit.ResponseHabitDTO;
 import com.example.backend_projeto.models.Habit;
 import com.example.backend_projeto.models.User;
 import com.example.backend_projeto.repository.habit.HabitRepository;
@@ -49,5 +52,11 @@ public class HabitService {
         }
 
         habitRepository.save(habit);
+    }
+
+    public List<ResponseHabitDTO> getAllByUser(User user) {
+        return habitRepository.findAllByUser_Id(user.getId()).stream()
+                .map(h -> new ResponseHabitDTO(h.getId(), h.getName(), h.getTypeHabit().getName()))
+                .collect(Collectors.toList());
     }
 }

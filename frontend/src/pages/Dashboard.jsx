@@ -1,8 +1,9 @@
 import React from 'react';
 import Card from '../Components/UI/Card';
-
+import MainLayout from '../Components/Layout/MainLayout';
 export default function Dashboard() {
   return (
+     <MainLayout>
     <div className="space-y-6">
       {/* Dashboard Summary Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -67,5 +68,6 @@ export default function Dashboard() {
         </div>
       </Card>
     </div>
+    </MainLayout>
   );
 }

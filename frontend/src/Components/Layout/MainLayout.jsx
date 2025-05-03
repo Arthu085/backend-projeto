@@ -13,7 +13,7 @@ export default function MainLayout({ children }) {
   const navigation = [
     { name: "Dashboard", href: "/dashboard", icon: "📊" },
     { name: "History", href: "/history", icon: "📜" },
-    { name: "New Recommendation", href: "/new-recommendation", icon: "✨" },
+    { name: "Suggestions", href:"/suggestions", icon: "✨"}
   ];
 
   // Check if the current path is the active item

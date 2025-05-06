@@ -1,12 +1,15 @@
 package com.example.backend_projeto.service.record;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.backend_projeto.dto.record.CreateRecordDTO;
+import com.example.backend_projeto.dto.record.ResponseRecordDTO;
 import com.example.backend_projeto.models.Habit;
 import com.example.backend_projeto.models.Record;
 import com.example.backend_projeto.models.User;
@@ -41,6 +44,17 @@ public class RecordService {
         } else {
             throw new RuntimeException("Registro não encontrado com o ID:" + id);
         }
+    }
+
+    public List<ResponseRecordDTO> getAllByUser(User user) {
+        return recordRepository.findAll().stream()
+                .filter(record -> record.getHabit().getUser().getId().equals(user.getId()))
+                .map(record -> new ResponseRecordDTO(
+                        record.getId(),
+                        record.getHabit().getUser().getName(),
+                        record.getHabit().getName(),
+                        record.getDatePerformed()))
+                .collect(Collectors.toList());
     }
 
 }

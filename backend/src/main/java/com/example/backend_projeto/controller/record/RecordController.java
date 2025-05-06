@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.backend_projeto.dto.record.CreateRecordDTO;
 import com.example.backend_projeto.models.User;
 import com.example.backend_projeto.service.record.RecordService;
+
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -23,5 +26,11 @@ public class RecordController {
     public ResponseEntity<Void> create(@RequestBody CreateRecordDTO dto, @AuthenticationPrincipal User user) {
         recordService.create(dto, user);
         return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        recordService.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }

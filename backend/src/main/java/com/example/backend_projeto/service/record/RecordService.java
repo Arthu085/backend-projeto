@@ -1,6 +1,7 @@
 package com.example.backend_projeto.service.record;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,15 @@ public class RecordService {
                 .build();
 
         recordRepository.save(record);
+    }
+
+    public void delete(Long id) {
+        Optional<Record> record = recordRepository.findById(id);
+        if (record.isPresent()) {
+            recordRepository.deleteById(id);
+        } else {
+            throw new RuntimeException("Registro não encontrado com o ID:" + id);
+        }
     }
 
 }

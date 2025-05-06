@@ -119,7 +119,7 @@ export default function RegisterForm({
           <button
             type="button"
             className="text-blue-600 font-medium hover:text-blue-500"
-            onClick={() => navigate("/login")}
+            onClick={() => navigate("/")}
           >
             Log in
           </button>

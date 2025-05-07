@@ -17,14 +17,6 @@ public class Recommendation {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "id_type")
-    private TypeHabit typeHabit;
-
-    @ManyToOne
-    @JoinColumn(name = "id_habit")
-    private Habit habit;
-
-    @ManyToOne
     @JoinColumn(name = "id_user")
     private User user;
 

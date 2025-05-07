@@ -1,4 +1,4 @@
-package com.example.backend_projeto.controller;
+package com.example.backend_projeto.controller.google;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

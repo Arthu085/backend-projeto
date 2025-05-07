@@ -7,5 +7,4 @@ import lombok.Setter;
 @Setter
 public class EditRecommendationDTO {
     private String description;
-    private Long habitId;
 }

@@ -11,7 +11,6 @@ import lombok.Setter;
 public class ResponseRecommendationDTO {
     private Long id;
     private String description;
-    private ResponseHabitDTO habit;
     private String userName;
     private String userEmail;
 }

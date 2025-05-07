@@ -7,6 +7,5 @@ import lombok.Setter;
 @Setter
 public class CreateRecommendationDTO {
     private String description;
-    private Long habitId; // ID do hábito relacionado
     private Long userId;  // ID do usuário (opcional se já autenticado)
 }

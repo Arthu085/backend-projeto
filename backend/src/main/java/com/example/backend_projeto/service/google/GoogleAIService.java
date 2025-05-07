@@ -39,7 +39,7 @@ public class GoogleAIService {
                     "Como um assistente especializado em bem-estar e desenvolvimento de hábitos saudáveis, " +
                             "me dê UMA sugestão de hábito saudável.\n\n" +
                             "Meu nome é %s, moro em %s, estou me sentindo %s e o clima está %s.\n\n" +
-                            "A sugestão deve ser curta, específica e motivacional.",
+                            "A sugestão deve ser curta, específica e motivacional (não colocar *).",
                     nome, cidade, estadoEmocional, clima);
 
             // Fazendo a requisição para a API do Google

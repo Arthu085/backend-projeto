@@ -1,4 +1,4 @@
-package com.example.backend_projeto.dto;
+package com.example.backend_projeto.dto.google;
 
 /**
  * DTO para a requisição de sugestão de hábito
@@ -10,7 +10,8 @@ public class HabitoRequestDTO {
     private String clima;
 
     // Construtores
-    public HabitoRequestDTO() {}
+    public HabitoRequestDTO() {
+    }
 
     public HabitoRequestDTO(String nome, String cidade, String estadoEmocional, String clima) {
         this.nome = nome;

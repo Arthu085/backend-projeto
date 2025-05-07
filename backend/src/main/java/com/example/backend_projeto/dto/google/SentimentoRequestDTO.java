@@ -1,4 +1,4 @@
-package com.example.backend_projeto.dto;
+package com.example.backend_projeto.dto.google;
 
 /**
  * DTO para a requisição de análise de sentimento
@@ -7,7 +7,8 @@ public class SentimentoRequestDTO {
     private String descricao;
 
     // Construtores
-    public SentimentoRequestDTO() {}
+    public SentimentoRequestDTO() {
+    }
 
     public SentimentoRequestDTO(String descricao) {
         this.descricao = descricao;

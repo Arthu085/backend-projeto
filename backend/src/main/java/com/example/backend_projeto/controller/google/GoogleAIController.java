@@ -7,10 +7,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.backend_projeto.dto.HabitoRequestDTO;
-import com.example.backend_projeto.dto.SentimentoRequestDTO;
-import com.example.backend_projeto.service.GoogleAIService;
-import com.example.backend_projeto.service.GoogleAIService.SentimentoDTO;
+import com.example.backend_projeto.dto.google.HabitoRequestDTO;
+import com.example.backend_projeto.dto.google.SentimentoRequestDTO;
+import com.example.backend_projeto.service.google.GoogleAIService;
+import com.example.backend_projeto.service.google.GoogleAIService.SentimentoDTO;
 
 /**
  * Controller para expor os endpoints da API do Google AI
@@ -35,8 +35,7 @@ public class GoogleAIController {
                     request.getNome(),
                     request.getCidade(),
                     request.getEstadoEmocional(),
-                    request.getClima()
-            );
+                    request.getClima());
             return ResponseEntity.ok(sugestao);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());

@@ -40,13 +40,13 @@ public class HabitController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("edit/{id}")
+    @PutMapping("/edit/{id}")
     public ResponseEntity<Void> edit(@PathVariable Long id, @RequestBody EditHabitDTO dto) {
         habitService.edit(id, dto);
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("fetch")
+    @GetMapping("/fetch")
     public ResponseEntity<List<ResponseHabitDTO>> getHabitsByUser(@AuthenticationPrincipal User user) {
         List<ResponseHabitDTO> habits = habitService.getAllByUser(user);
         return ResponseEntity.ok(habits);

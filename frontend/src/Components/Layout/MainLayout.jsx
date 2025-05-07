@@ -149,15 +149,10 @@ export default function MainLayout({ children }) {
 
 						{/* User */}
 						<div className="flex items-center p-4 border-t border-gray-400">
-							<div className="flex-shrink-0">
-								<div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white">
-									U
-								</div>
-							</div>
+							<div className="flex-shrink-0"></div>
 							<div className="ml-3">
-								<p className="text-sm font-medium text-gray-700">User Name</p>
 								<button
-									className="text-xs font-medium text-gray-500 hover:text-gray-700 cursor-pointer"
+									className="text-lg font-medium text-gray-500 hover:text-gray-700 cursor-pointer"
 									onClick={handleLoggout}>
 									Sair
 								</button>

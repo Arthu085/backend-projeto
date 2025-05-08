@@ -8,6 +8,7 @@ import {
 } from "../../hooks/useFetch";
 import Button from "../../Components/UI/Button";
 import { createRecordUser } from "../../hooks/useCreate";
+import { deleteHabitUser } from "../../hooks/useDelete";
 
 export default function Dashboard() {
 	const [habits, setHabits] = useState([]);
@@ -125,7 +126,23 @@ export default function Dashboard() {
 									<Button variant="primary" size="sm">
 										Editar
 									</Button>
-									<Button variant="danger" size="sm">
+									<Button
+										variant="danger"
+										size="sm"
+										onClick={async () => {
+											setLoading(true);
+											try {
+												setLoading(false);
+												await deleteHabitUser(token, habit.id);
+												alert("Hábito deletado com sucesso!");
+												const updatedHabits = await fetchHabitUser(token); // pega hábitos atualizados
+												setHabits(updatedHabits); // atualiza o estado
+											} catch (error) {
+												alert("Erro ao deletar hábito: " + error.message);
+											} finally {
+												setLoading(false);
+											}
+										}}>
 										Excluir
 									</Button>
 								</div>

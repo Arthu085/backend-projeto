@@ -132,21 +132,22 @@ export default function Dashboard() {
 				</div>
 
 				{/* Recent Activity */}
-				<Card title="Recent Activity">
+				<Card title="Hábitos cadastrados">
 					<div className="space-y-4">
-						{[1, 2, 3, 4, 5].map((item) => (
+						{habits.map((habit, index) => (
 							<div
-								key={item}
+								key={habit.id}
 								className="flex items-start pb-4 border-b border-gray-100 last:border-0">
 								<div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
-									{item}
+									{index + 1}
 								</div>
 								<div className="ml-4">
-									<p className="text-sm font-medium">Activity {item}</p>
-									<p className="text-sm text-gray-500">
-										Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+									<p className="text-sm font-medium">
+										Nome do hábito: {habit.name}
 									</p>
-									<p className="text-xs text-gray-400 mt-1">2 hours ago</p>
+									<p className="text-sm text-gray-500">
+										Tipo de hábito: {habit.typeName}
+									</p>
 								</div>
 							</div>
 						))}

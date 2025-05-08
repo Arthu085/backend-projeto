@@ -7,7 +7,7 @@ import Card from "../../Components/UI/Card";
 import Input from "../../Components/UI/Input";
 import Alert from "../../Components/UI/Alert";
 
-const HabitSuggestion = () => {
+const HabitSuggestion = ({ onSuccess }) => {
 	const [loading, setLoading] = useState(false);
 	const [salvando, setSalvando] = useState(false);
 	const [sugestao, setSugestao] = useState("");
@@ -47,6 +47,7 @@ const HabitSuggestion = () => {
 			}
 
 			alert("Recomendação salva com sucesso!");
+			if (onSuccess) onSuccess();
 		} catch (error) {
 			console.error(error);
 			setErro(error.message);

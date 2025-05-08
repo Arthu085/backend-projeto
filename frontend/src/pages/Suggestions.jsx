@@ -17,40 +17,50 @@ const Suggestions = () => {
 	const [error, setError] = useState(null);
 
 	// Fetch user data on component mount
-	useEffect(() => {
-		const fetchUserData = async () => {
-			try {
-				// Get the JWT token from local storage
-				const token = localStorage.getItem("token");
 
-				if (!token) {
-					throw new Error("Usuário não autenticado");
-				}
+	const fetchUserData = async () => {
+		try {
+			// Get the JWT token from local storage
+			const token = localStorage.getItem("token");
 
-				// Make API request with the token in Authorization header
-				const response = await axios.get("http://localhost:8000/user/me", {
+			if (!token) {
+				throw new Error("Usuário não autenticado");
+			}
+
+			// Make API request with the token in Authorization header
+			const response = await axios.get("http://localhost:8000/user/me", {
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			});
+
+			const responseSuggestions = await axios.get(
+				"http://localhost:8000/recommendation/fetch",
+				{
 					headers: {
 						Authorization: `Bearer ${token}`,
 					},
-				});
+				}
+			);
 
-				// Update state with user data
-				setUsuario({
-					nome: response.data.name,
-					cidade: response.data.city,
-					habitos: response.data.habits || [],
-				});
+			// Update state with user data
+			setUsuario({
+				nome: response.data.name,
+				cidade: response.data.city,
+				habitos: responseSuggestions.data || [],
+			});
 
-				setLoading(false);
-			} catch (err) {
-				console.error("Erro ao buscar dados do usuário:", err);
-				setError(
-					"Não foi possível carregar seus dados. Por favor, tente novamente."
-				);
-				setLoading(false);
-			}
-		};
+			setLoading(false);
+		} catch (err) {
+			console.error("Erro ao buscar dados do usuário:", err);
+			setError(
+				"Não foi possível carregar seus dados. Por favor, tente novamente."
+			);
+			setLoading(false);
+		}
+	};
 
+	useEffect(() => {
 		fetchUserData();
 	}, []);
 
@@ -72,11 +82,13 @@ const Suggestions = () => {
 								Seus Hábitos Salvos
 							</h2>
 							{usuario.habitos && usuario.habitos.length > 0 ? (
-								<ul className="list-disc pl-5">
+								<ul className="list-disc pl-5 ">
 									{usuario.habitos.map((habito, index) => (
-										<li key={index} className="mb-2">
-											{habito.descricao}
-										</li>
+										<div className="bg-gray-200 p-1 rounded-lg mb-2">
+											<li key={index} className="mb-2">
+												{habito.description}
+											</li>
+										</div>
 									))}
 								</ul>
 							) : (
@@ -92,10 +104,10 @@ const Suggestions = () => {
 								Olá, {usuario.nome}!
 							</h2>
 							<p className="mb-3">
-								Aqui estão algumas sugestões de hábitos para você em{" "}
+								Aqui estão algumas sugestões de hábitos para você na cidade de{" "}
 								{usuario.cidade}.
 							</p>
-							<HabitSuggestion />
+							<HabitSuggestion onSuccess={fetchUserData} />
 						</Card>
 					</div>
 				)}

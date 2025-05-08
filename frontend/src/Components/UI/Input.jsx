@@ -22,7 +22,10 @@ export default function Input({
 	error = "",
 	required = false,
 	className = "",
+	options = [], // novo
 }) {
+	const isSelect = type === "select";
+
 	return (
 		<div className={`mb-4 ${className}`}>
 			{label && (
@@ -32,17 +35,37 @@ export default function Input({
 					{label} {required && <span className="text-red-500">*</span>}
 				</label>
 			)}
-			<input
-				id={id}
-				type={type}
-				value={value}
-				onChange={onChange}
-				placeholder={placeholder}
-				required={required}
-				className={`w-full px-3 py-2 border ${
-					error ? "border-red-500" : ""
-				} rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
-			/>
+
+			{isSelect ? (
+				<select
+					id={id}
+					value={value}
+					onChange={onChange}
+					required={required}
+					className={`w-full px-3 py-2 border ${
+						error ? "border-red-500" : ""
+					} rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500`}>
+					<option value="">Selecione uma opção</option>
+					{options.map((opt) => (
+						<option key={opt.value} value={opt.value}>
+							{opt.label}
+						</option>
+					))}
+				</select>
+			) : (
+				<input
+					id={id}
+					type={type}
+					value={value}
+					onChange={onChange}
+					placeholder={placeholder}
+					required={required}
+					className={`w-full px-3 py-2 border ${
+						error ? "border-red-500" : ""
+					} rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500`}
+				/>
+			)}
+
 			{error && <p className="mt-1 text-sm text-red-500">{error}</p>}
 		</div>
 	);

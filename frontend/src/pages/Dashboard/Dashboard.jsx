@@ -9,6 +9,7 @@ import {
 import Button from "../../Components/UI/Button";
 import { createRecordUser } from "../../hooks/useCreate";
 import { deleteHabitUser } from "../../hooks/useDelete";
+import { useNavigate } from "react-router-dom";
 
 export default function Dashboard() {
 	const [habits, setHabits] = useState([]);
@@ -19,6 +20,7 @@ export default function Dashboard() {
 	const [error, setError] = useState(null);
 
 	const token = localStorage.getItem("token");
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		const token = localStorage.getItem("token");
@@ -89,7 +91,16 @@ export default function Dashboard() {
 				</div>
 
 				{/* Recent Activity */}
-				<Card title="Hábitos cadastrados">
+				<Card
+					title="Hábitos cadastrados"
+					footer={
+						<Button
+							variant="primary"
+							size="sm"
+							onClick={() => navigate("/dashboard/create")}>
+							Cadastrar
+						</Button>
+					}>
 					<div className="space-y-4">
 						{habits.map((habit, index) => (
 							<div
@@ -114,6 +125,8 @@ export default function Dashboard() {
 											setLoading(true);
 											try {
 												await createRecordUser(token, habit.id);
+												const updatedRecords = await fetchRecordUser(token);
+												setRecords(updatedRecords); // atualiza o estado
 												alert("Hábito marcado como concluído!");
 												setLoading(false);
 											} catch (error) {
@@ -137,6 +150,8 @@ export default function Dashboard() {
 												alert("Hábito deletado com sucesso!");
 												const updatedHabits = await fetchHabitUser(token); // pega hábitos atualizados
 												setHabits(updatedHabits); // atualiza o estado
+												const updatedRecords = await fetchRecordUser(token);
+												setRecords(updatedRecords); // atualiza o estado
 											} catch (error) {
 												alert("Erro ao deletar hábito: " + error.message);
 											} finally {

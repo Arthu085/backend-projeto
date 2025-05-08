@@ -23,6 +23,8 @@ cd backend-projeto
 
 ### 🖥️ Rodando o Backend (Spring Boot)
 
+**Necessário ter instalado Java 17**
+
 Acesse a pasta do backend:
 ```bash
 cd backend

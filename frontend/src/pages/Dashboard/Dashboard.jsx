@@ -136,7 +136,10 @@ export default function Dashboard() {
 										}}>
 										Concluído
 									</Button>
-									<Button variant="primary" size="sm">
+									<Button
+										variant="primary"
+										size="sm"
+										onClick={() => navigate(`/dashboard/edit/${habit.id}`)}>
 										Editar
 									</Button>
 									<Button

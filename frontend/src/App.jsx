@@ -7,6 +7,7 @@ import Login from "./pages/Auth/Login/page";
 import Register from "./pages/Auth/Register/Utils/page";
 import History from "./pages/History";
 import CreateHabit from "./pages/CreateHabit/CreateHabit";
+import EditHabit from "./pages/EditHabit/EditHabit";
 
 function App() {
 	return (
@@ -18,6 +19,7 @@ function App() {
 				<Route path="/suggestions" element={<Suggestions />} />
 				<Route path="/history" element={<History />} />
 				<Route path="/dashboard/create" element={<CreateHabit />} />
+				<Route path="/dashboard/edit/:id" element={<EditHabit />} />
 			</Routes>
 		</BrowserRouter>
 	);

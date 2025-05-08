@@ -1,11 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import MainLayout from "../../Components/Layout/MainLayout";
 import Card from "../../Components/UI/Card";
 import Input from "../../Components/UI/Input";
 import Button from "../../Components/UI/Button";
-import { createHabitUser } from "../../hooks/useCreate";
+import { editHabitUser } from "../../hooks/useEdit";
+import { useParams } from "react-router-dom";
+import { fetchHabitUser } from "../../hooks/useFetch";
 
-const CreateHabit = () => {
+const EditHabit = () => {
 	const [loading, setLoading] = useState(false);
 	const [name, setName] = useState("");
 	const [type, setType] = useState("");
@@ -23,7 +25,32 @@ const CreateHabit = () => {
 		{ id: 10, value: "aprendizado", label: "Aprendizado" },
 	];
 
-	const handleCreateHabit = async (e) => {
+	const { id } = useParams();
+
+	useEffect(() => {
+		const token = localStorage.getItem("token");
+
+		const fetchData = async () => {
+			try {
+				const habits = await fetchHabitUser(token);
+				const habit = habits.find((h) => h.id === Number(id));
+				if (habit) {
+					setName(habit.name);
+					setType(
+						habitTypes.find(
+							(t) => t.label.toLowerCase() === habit.typeName.toLowerCase()
+						)?.value || ""
+					);
+				}
+			} catch (err) {
+				console.error("Erro ao buscar hábito", err);
+			}
+		};
+
+		fetchData();
+	}, [id]);
+
+	const handleEditHabit = async (e) => {
 		e.preventDefault();
 		setLoading(true);
 
@@ -32,10 +59,12 @@ const CreateHabit = () => {
 			const selectedType = habitTypes.find((t) => t.value === type)?.id;
 			if (!selectedType) throw new Error("Tipo de hábito inválido.");
 
-			await createHabitUser(token, name, selectedType);
-			alert("Hábito cadastrado com sucesso!");
-			setName("");
-			setType("");
+			if (token && id) {
+				if (name || selectedType) {
+					await editHabitUser(token, id, name, selectedType);
+					alert("Hábito editado com sucesso!");
+				}
+			}
 		} catch (error) {
 			alert("Erro ao cadastrar hábito: " + error.message);
 		} finally {
@@ -46,12 +75,11 @@ const CreateHabit = () => {
 	return (
 		<MainLayout>
 			<Card title="Cadastrar hábito">
-				<form onSubmit={handleCreateHabit}>
+				<form onSubmit={handleEditHabit}>
 					<div className="space-y-3 mb-4">
 						<Input
 							label="Nome do hábito"
 							placeholder="Digite o nome do hábito"
-							required
 							value={name}
 							onChange={(e) => setName(e.target.value)}
 						/>
@@ -60,7 +88,6 @@ const CreateHabit = () => {
 								Tipo do hábito <span className="text-red-500">*</span>
 							</label>
 							<select
-								required
 								value={type}
 								onChange={(e) => setType(e.target.value)}
 								className="w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
@@ -74,7 +101,7 @@ const CreateHabit = () => {
 						</div>
 					</div>
 					<Button type="submit" disabled={loading} className="w-full">
-						{loading ? "Criando..." : "Cadastrar"}
+						{loading ? "Editando..." : "Editar"}
 					</Button>
 				</form>
 			</Card>
@@ -82,4 +109,4 @@ const CreateHabit = () => {
 	);
 };
 
-export default CreateHabit;
+export default EditHabit;

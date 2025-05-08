@@ -73,7 +73,7 @@ const Suggestions = () => {
 					<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 						<Card>
 							<h2 className="text-xl font-semibold mb-3">
-								Seus Hábitos Salvos
+								Suas Sugestões Salvas
 							</h2>
 							{usuario.habitos && usuario.habitos.length > 0 ? (
 								<ul className="list-disc pl-5 ">
@@ -87,7 +87,7 @@ const Suggestions = () => {
 								</ul>
 							) : (
 								<p>
-									Você ainda não tem hábitos salvos. Use o formulário ao lado
+									Você ainda não tem sugestões salvas. Use o formulário ao lado
 									para receber sugestões personalizadas!
 								</p>
 							)}

@@ -7,6 +7,7 @@ import {
 	fetchSuggestionUser,
 } from "../../hooks/useFetch";
 import Button from "../../Components/UI/Button";
+import { createRecordUser } from "../../hooks/useCreate";
 
 export default function Dashboard() {
 	const [habits, setHabits] = useState([]);
@@ -16,53 +17,7 @@ export default function Dashboard() {
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
 
-	const loadHabitUser = async () => {
-		try {
-			const token = localStorage.getItem("token");
-			if (!token) {
-				throw new Error("Usuário não autenticado.");
-			}
-
-			const data = await fetchHabitUser(token);
-			setHabits(data);
-			setLoading(false);
-		} catch (error) {
-			setError(error.message);
-			setLoading(false);
-		}
-	};
-
-	const loadSuggestionUser = async () => {
-		try {
-			const token = localStorage.getItem("token");
-			if (!token) {
-				throw new Error("Usuário não autenticado.");
-			}
-
-			const data = await fetchSuggestionUser(token);
-			setSuggestions(data);
-			setLoading(false);
-		} catch (error) {
-			setError(error.message);
-			setLoading(false);
-		}
-	};
-
-	const loadRecordUser = async () => {
-		try {
-			const token = localStorage.getItem("token");
-			if (!token) {
-				throw new Error("Usuário não autenticado.");
-			}
-
-			const data = await fetchRecordUser(token);
-			setRecords(data);
-			setLoading(false);
-		} catch (error) {
-			setError(error.message);
-			setLoading(false);
-		}
-	};
+	const token = localStorage.getItem("token");
 
 	useEffect(() => {
 		const token = localStorage.getItem("token");
@@ -151,7 +106,20 @@ export default function Dashboard() {
 									</p>
 								</div>
 								<div className="flex ml-auto gap-2">
-									<Button variant="success" size="sm">
+									<Button
+										variant="success"
+										size="sm"
+										onClick={async () => {
+											setLoading(true);
+											try {
+												await createRecordUser(token, habit.id);
+												alert("Hábito marcado como concluído!");
+												setLoading(false);
+											} catch (error) {
+												setLoading(false);
+												alert("Erro ao concluir hábito: " + error.message);
+											}
+										}}>
 										Concluído
 									</Button>
 									<Button variant="primary" size="sm">

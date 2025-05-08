@@ -5,7 +5,7 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import Suggestions from "./pages/Suggestions/Suggestions";
 import Login from "./pages/Auth/Login/page";
 import Register from "./pages/Auth/Register/Utils/page";
-import History from "./pages/History";
+import History from "./pages/History/History";
 import CreateHabit from "./pages/CreateHabit/CreateHabit";
 import EditHabit from "./pages/EditHabit/EditHabit";
 

@@ -1,7 +1,91 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Card from "../../Components/UI/Card";
 import MainLayout from "../../Components/Layout/MainLayout";
+import {
+	fetchHabitUser,
+	fetchRecordUser,
+	fetchSuggestionUser,
+} from "../../hooks/useFetch";
+
 export default function Dashboard() {
+	const [habits, setHabits] = useState([]);
+	const [suggestions, setSuggestions] = useState([]);
+	const [records, setRecords] = useState([]);
+
+	const [loading, setLoading] = useState(true);
+	const [error, setError] = useState(null);
+
+	const loadHabitUser = async () => {
+		try {
+			const token = localStorage.getItem("token");
+			if (!token) {
+				throw new Error("Usuário não autenticado.");
+			}
+
+			const data = await fetchHabitUser(token);
+			setHabits(data);
+			setLoading(false);
+		} catch (error) {
+			setError(error.message);
+			setLoading(false);
+		}
+	};
+
+	const loadSuggestionUser = async () => {
+		try {
+			const token = localStorage.getItem("token");
+			if (!token) {
+				throw new Error("Usuário não autenticado.");
+			}
+
+			const data = await fetchSuggestionUser(token);
+			setSuggestions(data);
+			setLoading(false);
+		} catch (error) {
+			setError(error.message);
+			setLoading(false);
+		}
+	};
+
+	const loadRecordUser = async () => {
+		try {
+			const token = localStorage.getItem("token");
+			if (!token) {
+				throw new Error("Usuário não autenticado.");
+			}
+
+			const data = await fetchRecordUser(token);
+			setRecords(data);
+			setLoading(false);
+		} catch (error) {
+			setError(error.message);
+			setLoading(false);
+		}
+	};
+
+	useEffect(() => {
+		const token = localStorage.getItem("token");
+		if (!token) {
+			setError("Usuário não autenticado.");
+			setLoading(false);
+			return;
+		}
+
+		Promise.allSettled([
+			fetchHabitUser(token),
+			fetchRecordUser(token),
+			fetchSuggestionUser(token),
+		])
+			.then(([habitRes, recordRes, suggestionRes]) => {
+				if (habitRes.status === "fulfilled") setHabits(habitRes.value);
+				if (recordRes.status === "fulfilled") setRecords(recordRes.value);
+				if (suggestionRes.status === "fulfilled")
+					setSuggestions(suggestionRes.value);
+			})
+			.catch((err) => setError("Erro ao carregar dados"))
+			.finally(() => setLoading(false));
+	}, []);
+
 	return (
 		<MainLayout>
 			<div className="space-y-6">
@@ -10,60 +94,38 @@ export default function Dashboard() {
 					<Card className="bg-blue-50 border-l-4 border-blue-500">
 						<div className="flex items-center">
 							<div className="ml-4">
-								<p className="text-sm font-medium text-blue-500">Total Users</p>
-								<p className="text-2xl font-semibold text-blue-700">1,257</p>
+								<p className="text-sm font-medium text-blue-500">
+									Total de hábitos
+								</p>
+								<p className="text-2xl font-semibold text-blue-700">
+									{habits.length}
+								</p>
 							</div>
 						</div>
 					</Card>
 
 					<Card className="bg-green-50 border-l-4 border-green-500">
 						<div className="flex items-center">
-							<div className="p-3 rounded-full bg-green-500 bg-opacity-10">
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									className="h-6 w-6 text-green-500"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke="currentColor">
-									<path
-										strokeLinecap="round"
-										strokeLinejoin="round"
-										strokeWidth={2}
-										d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-									/>
-								</svg>
-							</div>
 							<div className="ml-4">
 								<p className="text-sm font-medium text-green-500">
-									Completed Tasks
+									Total de hábitos concluídos
 								</p>
-								<p className="text-2xl font-semibold text-green-700">842</p>
+								<p className="text-2xl font-semibold text-green-700">
+									{records.length}
+								</p>
 							</div>
 						</div>
 					</Card>
 
 					<Card className="bg-purple-50 border-l-4 border-purple-500">
 						<div className="flex items-center">
-							<div className="p-3 rounded-full bg-purple-500 bg-opacity-10">
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									className="h-6 w-6 text-purple-500"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke="currentColor">
-									<path
-										strokeLinecap="round"
-										strokeLinejoin="round"
-										strokeWidth={2}
-										d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-									/>
-								</svg>
-							</div>
 							<div className="ml-4">
 								<p className="text-sm font-medium text-purple-500">
-									Pending Tasks
+									Total de sugestões
 								</p>
-								<p className="text-2xl font-semibold text-purple-700">32</p>
+								<p className="text-2xl font-semibold text-purple-700">
+									{suggestions.length}
+								</p>
 							</div>
 						</div>
 					</Card>

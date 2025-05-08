@@ -3,6 +3,10 @@
 
 **Equilíbrio AI** é um sistema que utiliza **PostgreSQL** (hospedado na Supabase) para armazenar dados de usuários, hábitos e seus tipos, recomendações personalizadas geradas por IA, e registros diários de hábitos realizados.  
 
+Foi utilizado a API de IA da Google, Gemini.
+
+Você pode acessá-la pelo link: https://ai.google.dev/aistudio?hl=pt-br
+
 📁 A modelagem do banco de dados está disponível em:  
 `/backend/modelagem.pdf`
 

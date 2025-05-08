@@ -18,6 +18,8 @@ export default function Dashboard() {
 
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
+	const [loadingHabitId, setLoadingHabitId] = useState(null);
+	const [deletingHabitId, setDeletingHabitId] = useState(null);
 
 	const token = localStorage.getItem("token");
 	const navigate = useNavigate();
@@ -121,20 +123,23 @@ export default function Dashboard() {
 									<Button
 										variant="success"
 										size="sm"
+										disabled={loadingHabitId === habit.id}
 										onClick={async () => {
-											setLoading(true);
+											setLoadingHabitId(habit.id);
 											try {
 												await createRecordUser(token, habit.id);
 												const updatedRecords = await fetchRecordUser(token);
-												setRecords(updatedRecords); // atualiza o estado
+												setRecords(updatedRecords);
 												alert("Hábito marcado como concluído!");
-												setLoading(false);
 											} catch (error) {
-												setLoading(false);
 												alert("Erro ao concluir hábito: " + error.message);
+											} finally {
+												setLoadingHabitId(null);
 											}
 										}}>
-										Concluído
+										{loadingHabitId === habit.id
+											? "Concluindo..."
+											: "Concluído"}
 									</Button>
 									<Button
 										variant="primary"
@@ -145,23 +150,23 @@ export default function Dashboard() {
 									<Button
 										variant="danger"
 										size="sm"
+										disabled={deletingHabitId === habit.id}
 										onClick={async () => {
-											setLoading(true);
+											setDeletingHabitId(habit.id);
 											try {
-												setLoading(false);
 												await deleteHabitUser(token, habit.id);
 												alert("Hábito deletado com sucesso!");
-												const updatedHabits = await fetchHabitUser(token); // pega hábitos atualizados
-												setHabits(updatedHabits); // atualiza o estado
+												const updatedHabits = await fetchHabitUser(token);
+												setHabits(updatedHabits);
 												const updatedRecords = await fetchRecordUser(token);
-												setRecords(updatedRecords); // atualiza o estado
+												setRecords(updatedRecords);
 											} catch (error) {
 												alert("Erro ao deletar hábito: " + error.message);
 											} finally {
-												setLoading(false);
+												setDeletingHabitId(null);
 											}
 										}}>
-										Excluir
+										{deletingHabitId === habit.id ? "Excluindo..." : "Excluir"}
 									</Button>
 								</div>
 							</div>

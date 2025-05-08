@@ -6,6 +6,7 @@ import {
 	fetchRecordUser,
 	fetchSuggestionUser,
 } from "../../hooks/useFetch";
+import Button from "../../Components/UI/Button";
 
 export default function Dashboard() {
 	const [habits, setHabits] = useState([]);
@@ -137,7 +138,7 @@ export default function Dashboard() {
 						{habits.map((habit, index) => (
 							<div
 								key={habit.id}
-								className="flex items-start pb-4 border-b border-gray-100 last:border-0">
+								className="flex items-center pb-4 border-b border-gray-100 last:border-0">
 								<div className="flex-shrink-0 w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
 									{index + 1}
 								</div>
@@ -148,6 +149,17 @@ export default function Dashboard() {
 									<p className="text-sm text-gray-500">
 										Tipo de hábito: {habit.typeName}
 									</p>
+								</div>
+								<div className="flex ml-auto gap-2">
+									<Button variant="success" size="sm">
+										Concluído
+									</Button>
+									<Button variant="primary" size="sm">
+										Editar
+									</Button>
+									<Button variant="danger" size="sm">
+										Excluir
+									</Button>
 								</div>
 							</div>
 						))}

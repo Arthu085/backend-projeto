@@ -1,67 +1,61 @@
 import { useState, useEffect } from "react";
-import MainLayout from "../Components/Layout/MainLayout";
-import HabitSuggestion from "../API/Utils/HabitSuggestion";
-import Card from "../Components/UI/Card";
-import axios from "axios"; // Make sure axios is installed
+import MainLayout from "../../Components/Layout/MainLayout";
+import HabitSuggestion from "../../API/Utils/HabitSuggestion";
+import Card from "../../Components/UI/Card";
+import axios from "axios";
+import { fetchUserData, fetchSuggestionUser } from "../../hooks/useFetch";
 
 const Suggestions = () => {
-	// State for user info
 	const [usuario, setUsuario] = useState({
 		nome: "",
 		cidade: "",
 		habitos: [],
 	});
-
-	// State for loading and error handling
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(null);
 
-	// Fetch user data on component mount
-
-	const fetchUserData = async () => {
+	const loadUserData = async () => {
 		try {
-			// Get the JWT token from local storage
 			const token = localStorage.getItem("token");
-
 			if (!token) {
-				throw new Error("Usuário não autenticado");
+				throw new Error("Usuário não autenticado.");
 			}
 
-			// Make API request with the token in Authorization header
-			const response = await axios.get("http://localhost:8000/user/me", {
-				headers: {
-					Authorization: `Bearer ${token}`,
-				},
-			});
-
-			const responseSuggestions = await axios.get(
-				"http://localhost:8000/recommendation/fetch",
-				{
-					headers: {
-						Authorization: `Bearer ${token}`,
-					},
-				}
-			);
-
-			// Update state with user data
-			setUsuario({
-				nome: response.data.name,
-				cidade: response.data.city,
-				habitos: responseSuggestions.data || [],
-			});
-
+			const data = await fetchUserData(token);
+			setUsuario((prev) => ({
+				...prev,
+				nome: data.name,
+				cidade: data.city,
+			}));
 			setLoading(false);
-		} catch (err) {
-			console.error("Erro ao buscar dados do usuário:", err);
-			setError(
-				"Não foi possível carregar seus dados. Por favor, tente novamente."
-			);
+		} catch (error) {
+			setError(error.message);
+			setLoading(false);
+		}
+	};
+
+	const loadSuggestionUser = async () => {
+		try {
+			const token = localStorage.getItem("token");
+			if (!token) {
+				throw new Error("Usuário não autenticado.");
+			}
+
+			const data = await fetchSuggestionUser(token);
+			setUsuario((prev) => ({
+				...prev,
+				habitos: data || [],
+			}));
+			setLoading(false);
+		} catch (error) {
+			setError(error.message);
 			setLoading(false);
 		}
 	};
 
 	useEffect(() => {
-		fetchUserData();
+		loadUserData();
+		loadSuggestionUser();
 	}, []);
 
 	return (
@@ -107,7 +101,7 @@ const Suggestions = () => {
 								Aqui estão algumas sugestões de hábitos para você na cidade de{" "}
 								{usuario.cidade}.
 							</p>
-							<HabitSuggestion onSuccess={fetchUserData} />
+							<HabitSuggestion onSuccess={loadSuggestionUser} />
 						</Card>
 					</div>
 				)}

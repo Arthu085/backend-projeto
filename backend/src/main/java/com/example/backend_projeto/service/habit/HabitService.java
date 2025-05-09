@@ -56,7 +56,12 @@ public class HabitService {
 
     public List<ResponseHabitDTO> getAllByUser(User user) {
         return habitRepository.findAllByUser_Id(user.getId()).stream()
-                .map(h -> new ResponseHabitDTO(h.getId(), h.getName(), h.getTypeHabit().getName()))
+                .map(habit -> new ResponseHabitDTO(
+                        habit.getId(),
+                        habit.getName(),
+                        habit.getTypeHabit().getName(),
+                        habit.getUser().getId()
+                ))
                 .collect(Collectors.toList());
     }
 }

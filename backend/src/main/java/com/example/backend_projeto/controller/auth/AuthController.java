@@ -1,12 +1,13 @@
 package com.example.backend_projeto.controller.auth;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.validation.Valid; // ✅ Import necessário para @Valid
+import com.example.backend_projeto.dto.auth.RegisterRequest; // ✅ Import do DTO
 import com.example.backend_projeto.models.User;
 import com.example.backend_projeto.service.auth.AuthService;
 import com.example.backend_projeto.dto.auth.AuthResponse;
@@ -31,9 +32,16 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<User> register(@RequestBody User user) {
-        User created = authService.registerUser(user);
-        return ResponseEntity.status(HttpStatus.CREATED).body(created); // 201 Created
+    public ResponseEntity<User> register(@RequestBody @Valid RegisterRequest request) {
+        User user = User.builder()
+                .name(request.getName())
+                .email(request.getEmail())
+                .password(request.getPassword())
+                .city(request.getCity())
+                .build();
+
+        User createdUser = authService.registerUser(user);
+        return ResponseEntity.ok(createdUser);
     }
 
 }

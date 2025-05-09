@@ -1,15 +1,13 @@
 package com.example.backend_projeto.models;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
 @Entity
 @Table(name = "recommendations", schema = "public")
 public class Recommendation {
@@ -19,8 +17,8 @@ public class Recommendation {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "id_type")
-    private TypeHabit typeHabit;
+    @JoinColumn(name = "id_user")
+    private User user;
 
     @Column(columnDefinition = "TEXT")
     private String description;

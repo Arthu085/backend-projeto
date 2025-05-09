@@ -129,7 +129,7 @@ Alternativamente, caso o software de testes tenha uma seção chamada "Authoriza
   **Body:**
 
   - `name` (string): Nome do hábito
-  - `type_habit` (int): 1 saúde, 2 produtividade, 3 emocional, 4 hobby, 5 sono, 6 espiritual, 7 social, 8 autocuidado, 9 criatividade, 10 aprendizado
+  - `id_type` (int): 1 saúde, 2 produtividade, 3 emocional, 4 hobby, 5 sono, 6 espiritual, 7 social, 8 autocuidado, 9 criatividade, 10 aprendizado
 
   ***
 
@@ -158,7 +158,7 @@ Alternativamente, caso o software de testes tenha uma seção chamada "Authoriza
   **Body (ambos são opcionais):**
 
   - `name` (string): Nome do hábito
-  - `type_habit` (int): 1 saúde, 2 produtividade, 3 emocional, 4 hobby, 5 sono, 6 espiritual, 7 social, 8 autocuidado, 9 criatividade, 10 aprendizado
+  - `id_type` (int): 1 saúde, 2 produtividade, 3 emocional, 4 hobby, 5 sono, 6 espiritual, 7 social, 8 autocuidado, 9 criatividade, 10 aprendizado
 
   ***
 

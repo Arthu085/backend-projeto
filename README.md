@@ -201,7 +201,7 @@ Alternativamente, caso o software de testes tenha uma seção chamada "Authoriza
 
 - **URL:** `http://localhost:8000/recommendation/create`  
   **Método:** `POST`  
-  **Descrição:** Rota para salvar sugestão da IA no banco, porém funciona somente se usado no frontend na tela "/Suggestions", pela rota é possível criar recomendação manualmente.
+  **Descrição:** Rota para salvar sugestão da IA no banco, porém funciona somente se usado no frontend na tela "/suggestions", pela rota é possível criar recomendação manualmente.
 
   **Body:**
 

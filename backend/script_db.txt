@@ -1,0 +1,36 @@
+-- Criação da tabela de usuários
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(50),
+    email VARCHAR(100),
+    password VARCHAR(70),
+    city VARCHAR(70)
+);
+
+-- Criação da tabela de tipos de hábitos
+CREATE TABLE types_habits (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(50)
+);
+
+-- Criação da tabela de hábitos
+CREATE TABLE habits (
+    id SERIAL PRIMARY KEY,
+    id_user INT REFERENCES users(id),
+    id_type INT REFERENCES types_habits(id),
+    name VARCHAR(50)
+);
+
+-- Criação da tabela de registros de hábitos
+CREATE TABLE records (
+    id SERIAL PRIMARY KEY,
+    id_habit INT REFERENCES habits(id),
+    date_performed DATE
+);
+
+-- Criação da tabela de recomendações
+CREATE TABLE recommendations (
+    id SERIAL PRIMARY KEY,
+    id_user INT REFERENCES users(id),
+    desc TEXT
+);
